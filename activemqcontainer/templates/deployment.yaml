@@ -23,7 +23,7 @@ spec:
     spec:
       {{- if .Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
+      - name:  "{{ .Values.imagePullSecrets }}"
       {{- end }}
       serviceAccountName: {{ include "activemqcontainer.serviceAccountName" . }}
       securityContext:
