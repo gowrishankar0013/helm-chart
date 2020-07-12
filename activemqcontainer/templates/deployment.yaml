@@ -21,7 +21,10 @@ spec:
       labels:
         {{- include "activemqcontainer.selectorLabels" . | nindent 8 }}
     spec:
-      imagePullSecrets: {{ .Values.imagePullSecrets }}
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+      - name:  "{{ .Values.imagePullSecrets }}"
+      {{- end }}
       serviceAccountName: {{ include "activemqcontainer.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
