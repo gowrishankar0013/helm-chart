@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "activemqcontainer.fullname" . }}
+  labels:
+    {{- include "activemqcontainer.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.servicebroker.port }}
+      targetPort: {{ .Values.servicebroker.targetPort }}
+      protocol: {{ .Values.servicebroker.protocol }}
+      name: {{ .Values.servicebroker.name }}
+    - port: {{ .Values.serviceadmin.port }}
+      targetPort: {{ .Values.serviceadmin.targetPort }}
+      protocol: {{ .Values.serviceadmin.protocol }}
+      name: {{ .Values.serviceadmin.name }}
+  selector:
+    {{- include "activemqcontainer.selectorLabels" . | nindent 4 }}

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "activemqcontainer.fullname" . }}-test-connection"
+  labels:
+    {{- include "activemqcontainer.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "activemqcontainer.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never
